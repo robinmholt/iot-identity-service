@@ -30,7 +30,23 @@ case "$OS:$ARCH" in
         exit 1
         ;;
 
-    'debian:10:amd64')
+      'debian:9:amd64')
+        export DEBIAN_FRONTEND=noninteractive
+        export TZ=UTC
+        export VENDOR_LIBTSS=1
+
+        apt-get update
+        apt-get upgrade -y
+        apt-get install -y \
+            acl autoconf autoconf-archive automake build-essential clang-6.0 cmake \
+            curl git jq libclang1-6.0 libltdl-dev libssl-dev libtool llvm-dev \
+            pkg-config curl
+
+        curl -sS 'https://git.savannah.gnu.org/gitweb/?p=autoconf-archive.git;a=blob_plain;f=m4/ax_is_release.m4' > $(dpkg -L autoconf-archive | grep ax_is_release.m4)
+        ;;
+
+
+      'debian:10:amd64')
         export DEBIAN_FRONTEND=noninteractive
         export TZ=UTC
         export VENDOR_LIBTSS=1
